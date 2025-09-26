@@ -58,3 +58,5 @@ htmlcov/
 
 # MacOS
 .DS_Store
+data/raw
+tune_out

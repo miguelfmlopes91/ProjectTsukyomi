@@ -1,0 +1,4 @@
+trades=8
+wins=4
+losses=4
+total_pnl=0.0139
