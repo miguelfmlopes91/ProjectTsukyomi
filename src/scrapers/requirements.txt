@@ -3,3 +3,5 @@ gspread
 gspread_dataframe
 oauth2client
 requests
+undetected-chromedriver
+webdriver-manager
