@@ -1,4 +1,0 @@
-trades=17
-wins=0
-losses=17
-total_pnl=-0.1161

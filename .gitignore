@@ -61,3 +61,6 @@ htmlcov/
 data/raw
 tune_out
 tune_improved
+test_tight
+test_loose
+test_improved
