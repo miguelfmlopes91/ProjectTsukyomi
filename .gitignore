@@ -64,3 +64,5 @@ tune_improved
 test_tight
 test_loose
 test_improved
+data/games
+results

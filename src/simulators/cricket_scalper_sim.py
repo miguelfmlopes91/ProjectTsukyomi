@@ -276,16 +276,16 @@ class EnhancedCricketScalper:
             exit_reason = None
             exit_price = None
 
-            if ask <= tp:
+            if bid >= tp:  # LAY TP: price goes up, we profit
                 exit_reason = "TP"
-                exit_price = tp + self._calculate_slippage(False, stake)
-            elif ask >= sl:
+                exit_price = tp - self._calculate_slippage(False, stake)
+            elif bid <= sl:  # LAY SL: price goes down, we lose
                 exit_reason = "SL"
-                exit_price = sl + self._calculate_slippage(False, stake)
+                exit_price = sl - self._calculate_slippage(False, stake)
 
             if exit_reason:
                 # Calculate P&L with realistic tick values
-                ticks_moved = round((entry_price - exit_price) / self.tick)
+                ticks_moved = round((exit_price - entry_price) / self.tick)  # Reverse for LAY
                 tick_value = stake * (self.tick / (entry_price * max(entry_price - self.tick, 1e-6)))
                 pnl = ticks_moved * tick_value
 
@@ -323,10 +323,10 @@ class EnhancedCricketScalper:
             except:
                 stake = 0.5  # Fallback minimum stake
 
-            # Entry with realistic slippage
-            entry_price = bid + self._calculate_slippage(True, stake)
-            tp = round(entry_price - self.tp_ticks * self.tick, 2)
-            sl = round(entry_price + self.sl_ticks * self.tick, 2)
+            # Entry with realistic slippage (LAY position after boundary)
+            entry_price = ask - self._calculate_slippage(True, stake)
+            tp = round(entry_price + self.tp_ticks * self.tick, 2)  # LAY position - profit when price goes UP
+            sl = round(entry_price - self.sl_ticks * self.tick, 2)  # LAY position - loss when price goes DOWN
 
             self.position = {
                 "entry": entry_price,
